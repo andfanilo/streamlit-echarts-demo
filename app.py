@@ -10,13 +10,13 @@ from demo_pyecharts import ST_PY_DEMOS
 def handle_api_change(new_val):
     session_state = st.beta_session_state()
     session_state.api = [new_val]
-    st.experimental_set_query_params(api=new_val)
+    #st.experimental_set_query_params(api=new_val)
 
 
 def handle_page_change(new_val):
     session_state = st.beta_session_state()
     session_state.page = [new_val]
-    st.experimental_set_query_params(page=new_val)
+    #st.experimental_set_query_params(page=new_val)
 
 
 def main():
