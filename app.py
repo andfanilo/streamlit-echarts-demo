@@ -50,7 +50,7 @@ def main():
     )
 
     page_options = (
-        list(ST_DEMOS.keys()) if selected_api == "echarts" else list(ST_PY_DEMOS.keys())
+        list(ST_PY_DEMOS.keys()) if selected_api == "pyecharts" else list(ST_DEMOS.keys())
     )
     preselected_page_index = (
         eval(str(first_query_params["page"][0])) if "page" in app_state else 0

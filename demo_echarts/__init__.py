@@ -1,12 +1,17 @@
 from .bar import render_set_style_of_single_bar
 from .line import render_basic_line_chart
+from .line import render_line_race
 from .pie import render_nightingale_rose_diagram
 from .scatter import render_anscombe_quartet
 
 ST_DEMOS = {
-    "Render Basic Line": (
+    "Basic Line": (
         render_basic_line_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=line-simple",
+    ),
+    "Racing Line": (
+        render_line_race,
+        "https://echarts.apache.org/examples/en/editor.html?c=line-race",
     ),
     "Set Style Of Single Bar": (
         render_set_style_of_single_bar,
