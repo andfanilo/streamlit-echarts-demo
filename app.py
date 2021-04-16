@@ -526,6 +526,13 @@ def render_map():
     with st.echo("below"):
         import json
 
+        formatter = JsCode(
+            "function (params) {"
+            + "var value = (params.value + '').split('.');"
+            + "value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');"
+            + "return params.seriesName + '<br/>' + params.name + ': ' + value;}"
+        ).js_code
+
         with open("USA.json", "r") as f:
             map = Map(
                 "USA",
@@ -543,7 +550,12 @@ def render_map():
                 "sublink": "http://www.census.gov/popest/data/datasets.html",
                 "left": "right",
             },
-            "tooltip": {"trigger": "item", "showDelay": 0, "transitionDuration": 0.2},
+            "tooltip": {
+                "trigger": "item",
+                "showDelay": 0,
+                "transitionDuration": 0.2,
+                "formatter": formatter,
+            },
             "visualMap": {
                 "left": "right",
                 "min": 500000,
