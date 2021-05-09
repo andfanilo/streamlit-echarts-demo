@@ -2,7 +2,7 @@ from streamlit_echarts import st_echarts
 
 
 def render_basic_radar():
-    option = option = {
+    option = {
         "title": {"text": "基础雷达图"},
         "legend": {"data": ["预算分配（Allocated Budget）", "实际开销（Actual Spending）"]},
         "radar": {

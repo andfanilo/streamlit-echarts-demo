@@ -8,6 +8,13 @@ from .radar import ST_RADAR_DEMOS
 from .boxplot import ST_BOXPLOT_DEMOS
 from .heatmap import ST_HEATMAP_DEMOS
 from .graph import ST_GRAPH_DEMOS
+from .tree import ST_TREE_DEMOS
+from .treemap import ST_TREEMAP_DEMOS
+from .sunburst import ST_SUNBURST_DEMOS
+from .parallel import ST_PARALLEL_DEMOS
+from .sankey import ST_SANKEY_DEMOS
+from .funnel import ST_FUNNEL_DEMOS
+from .gauge import ST_GAUGE_DEMOS
 
 ST_DEMOS = {
     **ST_LINE_DEMOS,
@@ -20,4 +27,11 @@ ST_DEMOS = {
     **ST_BOXPLOT_DEMOS,
     **ST_HEATMAP_DEMOS,
     **ST_GRAPH_DEMOS,
+    **ST_TREE_DEMOS,
+    **ST_TREEMAP_DEMOS,
+    **ST_SUNBURST_DEMOS,
+    **ST_PARALLEL_DEMOS,
+    **ST_SANKEY_DEMOS,
+    **ST_FUNNEL_DEMOS,
+    **ST_GAUGE_DEMOS,
 }
