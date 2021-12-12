@@ -54,12 +54,9 @@ def render_labelchanged():
             }
         ],
     }
-    st.markdown("Select a legend, see the detail of selected in the Javascript console")
-    st.warning(
-        ":warning: In your code, if you return an element on legend select changed, Streamlit will rerun and redraw the original component :confused:"
-    )
+    st.markdown("Select a legend, see the detail")
     events = {
-        "legendselectchanged": "function(params) { console.log(params) }",
+        "legendselectchanged": "function(params) { return params.selected }",
     }
     s = st_echarts(
         options=options, events=events, height="600px", key="render_pie_events"
