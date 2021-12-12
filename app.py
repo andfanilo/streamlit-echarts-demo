@@ -9,12 +9,13 @@ from demo_pyecharts import ST_PY_DEMOS
 
 def main():
     st.title("Streamlit ECharts Demo")
-    
+
     with st.sidebar:
         st.header("Configuration")
         api_options = ("echarts", "pyecharts")
         selected_api = st.selectbox(
-            label="Choose your preferred API:", options=api_options,
+            label="Choose your preferred API:",
+            options=api_options,
         )
 
         page_options = (
@@ -23,19 +24,28 @@ def main():
             else list(ST_DEMOS.keys())
         )
         selected_page = st.selectbox(
-            label="Choose an example", options=page_options,
+            label="Choose an example",
+            options=page_options,
         )
-        demo, url = ST_DEMOS[selected_page] if selected_api=="echarts" else ST_PY_DEMOS[selected_page]
+        demo, url = (
+            ST_DEMOS[selected_page]
+            if selected_api == "echarts"
+            else ST_PY_DEMOS[selected_page]
+        )
 
-        if selected_api=="echarts":
-            st.caption("""ECharts demos are extracted from https://echarts.apache.org/examples/en/index.html, 
+        if selected_api == "echarts":
+            st.caption(
+                """ECharts demos are extracted from https://echarts.apache.org/examples/en/index.html, 
             by copying/formattting the 'option' json object into st_echarts.
-            Definitely check the echarts example page, convert the JSON specs to Python Dicts and you should get a nice viz.""")
-        if selected_api=="pyecharts":
-            st.caption("""Pyecharts demos are extracted from https://github.com/pyecharts/pyecharts-gallery,
+            Definitely check the echarts example page, convert the JSON specs to Python Dicts and you should get a nice viz."""
+            )
+        if selected_api == "pyecharts":
+            st.caption(
+                """Pyecharts demos are extracted from https://github.com/pyecharts/pyecharts-gallery,
             by copying the pyecharts object into st_pyecharts. 
-            Pyecharts is still using ECharts 4 underneath, which is why the theming between st_echarts and st_pyecharts is different.""")
-        
+            Pyecharts is still using ECharts 4 underneath, which is why the theming between st_echarts and st_pyecharts is different."""
+            )
+
     demo()
 
     sourcelines, _ = inspect.getsourcelines(demo)
