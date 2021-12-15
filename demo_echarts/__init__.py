@@ -4,6 +4,7 @@ from .calendar import ST_CALENDAR_DEMOS
 from .candlestick import ST_CANDLESTICK_DEMOS
 from .dataset import ST_DATASET_DEMOS
 from .events import ST_EVENTS_DEMOS
+from .extensions import ST_EXTENSIONS_DEMOS
 from .funnel import ST_FUNNEL_DEMOS
 from .gauge import ST_GAUGE_DEMOS
 from .graph import ST_GRAPH_DEMOS
@@ -44,4 +45,5 @@ ST_DEMOS = {
     **ST_CALENDAR_DEMOS,
     **ST_DATASET_DEMOS,
     **ST_EVENTS_DEMOS,
+    **ST_EXTENSIONS_DEMOS,
 }
