@@ -84,7 +84,6 @@ else:  # All Time
 
 
 # 2. Categorical Filtering
-@st.cache_data
 def apply_categorical_filters(_base_df, markets, categories, sub_categories, segment):
     filtered = _base_df
     if markets:
