@@ -3,8 +3,8 @@ import textwrap
 
 import streamlit as st
 
-from demo_echarts import ST_DEMOS
-from demo_pyecharts import ST_PY_DEMOS
+from demo_echarts import ST_DEMOS_BY_CATEGORY
+from demo_pyecharts import ST_PY_DEMOS_BY_CATEGORY
 
 
 st.title("Examples")
@@ -15,20 +15,24 @@ with st.sidebar:
         "pyecharts" if st.toggle("Use PyECharts API", value=False) else "echarts"
     )
 
-    page_options = (
-        list(ST_PY_DEMOS.keys())
+    demos_by_category = (
+        ST_PY_DEMOS_BY_CATEGORY
         if selected_api == "pyecharts"
-        else list(ST_DEMOS.keys())
+        else ST_DEMOS_BY_CATEGORY
     )
-    selected_page = st.selectbox(
-        label="Choose an example",
-        options=page_options,
+
+    selected_category = st.selectbox(
+        label="Category",
+        options=list(demos_by_category.keys()),
     )
-    demo, url = (
-        ST_DEMOS[selected_page]
-        if selected_api == "echarts"
-        else ST_PY_DEMOS[selected_page]
+
+    demos_in_category = demos_by_category[selected_category]
+    selected_demo = st.selectbox(
+        label="Demo",
+        options=list(demos_in_category.keys()),
     )
+
+    demo, url = demos_in_category[selected_demo]
 
     if selected_api == "echarts":
         st.caption(
