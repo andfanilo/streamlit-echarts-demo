@@ -1,3 +1,2 @@
-streamlit>=1.51
-streamlit-echarts>=0.5.0
-pyecharts>=1.9
+streamlit>=1.53
+streamlit-echarts[pyecharts]>=0.6.0

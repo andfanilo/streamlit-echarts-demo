@@ -25,9 +25,9 @@ streamlit run app.py
 ## Requirements
 
 - Python >= 3.10
-- `streamlit >= 1.51`
-- `streamlit-echarts >= 0.5.0` (v2, with ECharts 6)
-- `pyecharts >= 1.9`
+- `streamlit >= 1.53`
+- `streamlit-echarts[pyecharts] >= 0.6.0` (v2, with ECharts 6)
+- `pyecharts >= 2.0` (pulled in via the `[pyecharts]` extra)
 
 ## Contribute
 
