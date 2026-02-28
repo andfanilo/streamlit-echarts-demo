@@ -779,8 +779,8 @@ with row5_1:
     options = {
         "title": {"text": "Priority vs. Shipping Mode", "left": "center"},
         "tooltip": {"position": "top"},
-        "grid": {"height": "55%", "top": "15%"},
-        "xAxis": {"type": "category", "data": modes},
+        "grid": {"height": "50%", "top": "15%", "bottom": "25%"},
+        "xAxis": {"type": "category", "data": modes, "axisLabel": {"rotate": 30, "interval": 0}},
         "yAxis": {"type": "category", "data": priorities},
         "visualMap": {
             "min": 0,
@@ -854,35 +854,57 @@ with row5_2:
         )
 
 with row5_3:
-    # Shipping Delay Distribution (ship_date - order_date)
+    # Shipping Delay Distribution by Priority (ship_date - order_date)
     delay_df = (
         current_df.with_columns(
             (pl.col("ship_date") - pl.col("order_date"))
             .dt.total_days()
             .alias("ship_days")
         )
-        .group_by("ship_days")
+        .filter(pl.col("ship_days") >= 0)
+        .group_by("ship_days", "order_priority")
         .agg(pl.len().alias("count"))
         .sort("ship_days")
-        .filter(pl.col("ship_days") >= 0)
     )
 
     if delay_df.is_empty():
         st.info("No shipping delay data.")
     else:
-        day_labels = [f"{d}d" for d in delay_df["ship_days"].to_list()]
+        all_days = sorted(delay_df["ship_days"].unique().to_list())
+        day_labels = [f"{d}d" for d in all_days]
+        priorities = ["Critical", "High", "Medium", "Low"]
+        priority_colors = {
+            "Critical": "#ee6666",
+            "High": "#fac858",
+            "Medium": "#5470c6",
+            "Low": "#91cc75",
+        }
+
+        series = []
+        for pri in priorities:
+            pri_data = delay_df.filter(pl.col("order_priority") == pri)
+            values = []
+            for d in all_days:
+                row = pri_data.filter(pl.col("ship_days") == d)
+                values.append(row["count"][0] if not row.is_empty() else 0)
+            series.append(
+                {
+                    "name": pri,
+                    "type": "bar",
+                    "stack": "total",
+                    "data": values,
+                    "itemStyle": {"color": priority_colors[pri]},
+                }
+            )
+
         options = {
-            "title": {"text": "Shipping Delay", "left": "center"},
-            "tooltip": {"trigger": "axis", "formatter": "{b}: {c} orders"},
+            "title": {"text": "Shipping Delay by Priority", "left": "center"},
+            "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
+            "legend": {"bottom": "0"},
             "xAxis": {"type": "category", "data": day_labels, "name": "Days to Ship"},
             "yAxis": {"type": "value"},
-            "series": [
-                {
-                    "type": "bar",
-                    "data": delay_df["count"].to_list(),
-                    "itemStyle": {"color": "#5470c6"},
-                }
-            ],
+            "grid": {"bottom": "12%"},
+            "series": series,
         }
         st_echarts(options=options, height="450px", key="ship_delay", theme="streamlit")
 

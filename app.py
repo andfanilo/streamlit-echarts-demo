@@ -14,11 +14,9 @@ pg = st.navigation([
 pg.run()
 
 with st.sidebar:
+    st.markdown(":material/code: [streamlit-echarts](https://github.com/andfanilo/streamlit-echarts)")
+    st.caption("Made in :streamlit: by [@andfanilo](https://andfanilo.com)")
     st.markdown(
-        '<h6>Made in &nbsp<img src="https://streamlit.io/images/brand/streamlit-mark-color.png" alt="Streamlit logo" height="16">&nbsp by <a href="https://andfanilo.com">@andfanilo</a></h6>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div style="margin-top: 0.75em;"><a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></div>',
+        '<div style="margin-top: 0.75em;"><a href="https://www.buymeacoffee.com/andfanilo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174" style="border-radius: 12px;"></a></div>',
         unsafe_allow_html=True,
     )
