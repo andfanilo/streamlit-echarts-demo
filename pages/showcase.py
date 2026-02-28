@@ -3,11 +3,18 @@ import polars as pl
 from streamlit_echarts import st_echarts, JsCode
 
 # Page Configuration
-st.set_page_config(page_title="ECharts Gallery", layout="wide")
+st.set_page_config(
+    page_title="ECharts Gallery",
+    page_icon=":material/bar_chart:",
+    layout="wide",
+)
+
+# --- CONSTANTS ---
+PRIORITIES = ["Critical", "High", "Medium", "Low"]
 
 
 # --- DATA LOADING ---
-@st.cache_resource
+@st.cache_data
 def get_dataset():
     df = pl.read_csv("data/global_superstore.csv", encoding="latin1")
     df = df.with_columns(
@@ -30,28 +37,30 @@ st.markdown(
 # --- SIDEBAR: Filters + Info ---
 with st.sidebar:
     st.title(":material/filter_alt: Filters")
-    period = st.selectbox(
+    selected_period = st.selectbox(
         "Reporting Period",
         ["1 Month", "3 Months", "6 Months", "12 Months", "24 Months", "All Time"],
         index=3,
     )
-    markets = st.multiselect(
+    selected_markets = st.multiselect(
         "Market", options=sorted(df["market"].unique().to_list()), default=[]
     )
-    categories = st.multiselect(
+    selected_categories = st.multiselect(
         "Category", options=sorted(df["category"].unique().to_list()), default=[]
     )
     # Sub-category options depend on selected categories
-    if categories:
+    if selected_categories:
         sub_cat_options = sorted(
-            df.filter(pl.col("category").is_in(categories))["sub_category"]
+            df.filter(pl.col("category").is_in(selected_categories))["sub_category"]
             .unique()
             .to_list()
         )
     else:
         sub_cat_options = sorted(df["sub_category"].unique().to_list())
-    sub_categories = st.multiselect("Sub-Category", options=sub_cat_options, default=[])
-    segments = st.selectbox(
+    selected_sub_categories = st.multiselect(
+        "Sub-Category", options=sub_cat_options, default=[]
+    )
+    selected_segment = st.selectbox(
         "Customer Segment", options=["All"] + sorted(df["segment"].unique().to_list())
     )
 
@@ -65,8 +74,8 @@ period_offsets = {
     "12 Months": "-1y",
     "24 Months": "-2y",
 }
-if period in period_offsets:
-    offset = period_offsets[period]
+if selected_period in period_offsets:
+    offset = period_offsets[selected_period]
     current_start = pl.select(pl.lit(max_date).dt.offset_by(offset)).item()
     prev_start = pl.select(pl.lit(current_start).dt.offset_by(offset)).item()
 else:  # All Time
@@ -75,20 +84,27 @@ else:  # All Time
 
 
 # 2. Categorical Filtering
-def apply_categorical_filters(base_df):
-    filtered = base_df
+@st.cache_data
+def apply_categorical_filters(_base_df, markets, categories, sub_categories, segment):
+    filtered = _base_df
     if markets:
         filtered = filtered.filter(pl.col("market").is_in(markets))
     if categories:
         filtered = filtered.filter(pl.col("category").is_in(categories))
     if sub_categories:
         filtered = filtered.filter(pl.col("sub_category").is_in(sub_categories))
-    if segments != "All":
-        filtered = filtered.filter(pl.col("segment") == segments)
+    if segment != "All":
+        filtered = filtered.filter(pl.col("segment") == segment)
     return filtered
 
 
-current_df = apply_categorical_filters(df.filter(pl.col("order_date") >= current_start))
+current_df = apply_categorical_filters(
+    df.filter(pl.col("order_date") >= current_start),
+    selected_markets,
+    selected_categories,
+    selected_sub_categories,
+    selected_segment,
+)
 
 # Previous period
 if prev_start:
@@ -96,7 +112,11 @@ if prev_start:
         df.filter(
             (pl.col("order_date") >= prev_start)
             & (pl.col("order_date") < current_start)
-        )
+        ),
+        selected_markets,
+        selected_categories,
+        selected_sub_categories,
+        selected_segment,
     )
 else:
     prev_df = None
@@ -239,10 +259,10 @@ row2_1, row2_2 = st.columns([3, 2], gap="small")
 
 with row2_1:
     # Smart aggregation based on period
-    if period == "1 Month":
+    if selected_period == "1 Month":
         trunc_rule = None  # daily — no truncation
         date_fmt = "%Y-%m-%d"
-    elif period == "3 Months":
+    elif selected_period == "3 Months":
         trunc_rule = "1w"
         date_fmt = "%Y-%m-%d"
     else:
@@ -277,7 +297,7 @@ with row2_1:
     else:
         dates = trend_df["period_date"].dt.to_string(date_fmt).to_list()
 
-        options = {
+        trend_opts = {
             "title": {"text": "Revenue & Profit Trend", "left": "center", "top": 5},
             "toolbox": {
                 "feature": {
@@ -317,7 +337,7 @@ with row2_1:
                 },
             ],
         }
-        st_echarts(options=options, height="400px", key="trend", theme="streamlit")
+        st_echarts(options=trend_opts, height="400px", key="trend", theme="streamlit")
 
 with row2_2:
     # MoM Revenue Growth
@@ -331,17 +351,13 @@ with row2_2:
     if mom_df.height <= 2:
         st.info("Need at least 3 months of data to show growth.")
     else:
-        mom_df = (
-            mom_df.with_columns(
-                (
-                    (pl.col("revenue") - pl.col("revenue").shift(1))
-                    / pl.col("revenue").shift(1)
-                    * 100
-                ).alias("growth_pct")
-            )
-            .drop_nulls("growth_pct")
-            .slice(1)  # drop first bar — partial month causes extreme spike
-        )
+        mom_df = mom_df.with_columns(
+            (
+                (pl.col("revenue") - pl.col("revenue").shift(1))
+                / pl.col("revenue").shift(1)
+                * 100
+            ).alias("growth_pct")
+        ).drop_nulls("growth_pct")
 
         months = mom_df["month"].dt.to_string("%Y-%m").to_list()
         growth_vals = mom_df["growth_pct"].round(1).to_list()
@@ -352,7 +368,7 @@ with row2_2:
             color = "#91cc75" if v >= 0 else "#ee6666"
             bar_data.append({"value": v, "itemStyle": {"color": color}})
 
-        options = {
+        mom_opts = {
             "title": {"text": "MoM Revenue Growth", "left": "center", "top": 5},
             "toolbox": {
                 "feature": {
@@ -367,7 +383,9 @@ with row2_2:
             "grid": {"bottom": "20%", "containLabel": True},
             "series": [{"type": "bar", "data": bar_data, "label": {"show": False}}],
         }
-        st_echarts(options=options, height="400px", key="mom_growth", theme="streamlit")
+        st_echarts(
+            options=mom_opts, height="400px", key="mom_growth", theme="streamlit"
+        )
 
 # ==========================================
 # ROW 3: "Where & What?"
@@ -416,7 +434,7 @@ with row3_1:
         margin_min = tree_df["margin"].min()
         margin_max = tree_df["margin"].max()
 
-        options = {
+        treemap_opts = {
             "title": {"text": "Category → Sub-Category", "left": "center"},
             "tooltip": {
                 "formatter": JsCode(
@@ -467,7 +485,9 @@ with row3_1:
                 }
             ],
         }
-        st_echarts(options=options, height="450px", key="treemap", theme="streamlit")
+        st_echarts(
+            options=treemap_opts, height="450px", key="treemap", theme="streamlit"
+        )
 
 with row3_2:
     # Radar: Market Profiles (normalized)
@@ -510,7 +530,7 @@ with row3_2:
                 {"name": row["market"], "value": [round(row[m], 1) for m in metrics]}
             )
 
-        options = {
+        radar_opts = {
             "title": {"text": "Market Profiles", "left": "center"},
             "tooltip": {"trigger": "item"},
             "legend": {
@@ -527,7 +547,7 @@ with row3_2:
                 {"type": "radar", "data": series_data, "areaStyle": {"opacity": 0.1}}
             ],
         }
-        st_echarts(options=options, height="450px", key="radar", theme="streamlit")
+        st_echarts(options=radar_opts, height="450px", key="radar", theme="streamlit")
 
 with row3_3:
     # Top 5 Sub-Categories by Market (stacked horizontal bar)
@@ -548,7 +568,7 @@ with row3_3:
             .agg(pl.col("sales").sum().alias("sales"))
         )
         all_markets = sorted(stacked_df["market"].unique().to_list())
-        series = []
+        top5_series = []
         for mkt in all_markets:
             mkt_data = []
             for sc in top5_names:
@@ -556,7 +576,7 @@ with row3_3:
                     (pl.col("sub_category") == sc) & (pl.col("market") == mkt)
                 )["sales"]
                 mkt_data.append(round(val[0], 2) if not val.is_empty() else 0)
-            series.append(
+            top5_series.append(
                 {
                     "name": mkt,
                     "type": "bar",
@@ -566,7 +586,7 @@ with row3_3:
                 }
             )
 
-        options = {
+        top5_opts = {
             "title": {"text": "Top 5: Revenue by Market", "left": "center"},
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
             "legend": {"bottom": "0", "type": "scroll", "textStyle": {"fontSize": 10}},
@@ -578,10 +598,10 @@ with row3_3:
             },
             "xAxis": {"type": "value"},
             "yAxis": {"type": "category", "data": top5_names[::-1]},
-            "series": series,
+            "series": top5_series,
         }
         st_echarts(
-            options=options, height="450px", key="top5_stacked_bar", theme="streamlit"
+            options=top5_opts, height="450px", key="top5_stacked_bar", theme="streamlit"
         )
 
 
@@ -736,7 +756,10 @@ def drill_down_section():
                     theme="streamlit",
                 )
         else:
-            st.info("👈 Click a bubble to drill into its monthly trend.")
+            st.info(
+                "Click a bubble to drill into its monthly trend.",
+                icon=":material/touch_app:",
+            )
 
 
 with st.container(border=True):
@@ -762,26 +785,29 @@ with row5_1:
         pl.len().alias("count")
     )
 
-    priorities = ["Critical", "High", "Medium", "Low"]
     modes = ["Same Day", "First Class", "Second Class", "Standard Class"]
 
     heatmap_data = []
     for row in heatmap_df.to_dicts():
-        if row["order_priority"] in priorities and row["ship_mode"] in modes:
+        if row["order_priority"] in PRIORITIES and row["ship_mode"] in modes:
             heatmap_data.append(
                 [
                     modes.index(row["ship_mode"]),
-                    priorities.index(row["order_priority"]),
+                    PRIORITIES.index(row["order_priority"]),
                     row["count"],
                 ]
             )
 
-    options = {
+    heatmap_opts = {
         "title": {"text": "Priority vs. Shipping Mode", "left": "center"},
         "tooltip": {"position": "top"},
         "grid": {"height": "50%", "top": "15%", "bottom": "25%"},
-        "xAxis": {"type": "category", "data": modes, "axisLabel": {"rotate": 30, "interval": 0}},
-        "yAxis": {"type": "category", "data": priorities},
+        "xAxis": {
+            "type": "category",
+            "data": modes,
+            "axisLabel": {"rotate": 30, "interval": 0},
+        },
+        "yAxis": {"type": "category", "data": PRIORITIES},
         "visualMap": {
             "min": 0,
             "max": heatmap_df["count"].max() if not heatmap_df.is_empty() else 100,
@@ -804,7 +830,7 @@ with row5_1:
         ],
     }
     st_echarts(
-        options=options, height="450px", key="shipping_heatmap", theme="streamlit"
+        options=heatmap_opts, height="450px", key="shipping_heatmap", theme="streamlit"
     )
 
 with row5_2:
@@ -822,7 +848,7 @@ with row5_2:
         st.info("No shipping data.")
     else:
         ship_modes = ship_df["ship_mode"].to_list()
-        options = {
+        shipping_opts = {
             "title": {"text": "Avg Shipping Cost vs Profit by Mode", "left": "center"},
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
             "legend": {"bottom": "0"},
@@ -850,7 +876,10 @@ with row5_2:
             ],
         }
         st_echarts(
-            options=options, height="450px", key="ship_cost_profit", theme="streamlit"
+            options=shipping_opts,
+            height="450px",
+            key="ship_cost_profit",
+            theme="streamlit",
         )
 
 with row5_3:
@@ -872,7 +901,6 @@ with row5_3:
     else:
         all_days = sorted(delay_df["ship_days"].unique().to_list())
         day_labels = [f"{d}d" for d in all_days]
-        priorities = ["Critical", "High", "Medium", "Low"]
         priority_colors = {
             "Critical": "#ee6666",
             "High": "#fac858",
@@ -880,14 +908,14 @@ with row5_3:
             "Low": "#91cc75",
         }
 
-        series = []
-        for pri in priorities:
+        delay_series = []
+        for pri in PRIORITIES:
             pri_data = delay_df.filter(pl.col("order_priority") == pri)
             values = []
             for d in all_days:
                 row = pri_data.filter(pl.col("ship_days") == d)
                 values.append(row["count"][0] if not row.is_empty() else 0)
-            series.append(
+            delay_series.append(
                 {
                     "name": pri,
                     "type": "bar",
@@ -897,16 +925,18 @@ with row5_3:
                 }
             )
 
-        options = {
+        delay_opts = {
             "title": {"text": "Shipping Delay by Priority", "left": "center"},
             "tooltip": {"trigger": "axis", "axisPointer": {"type": "shadow"}},
             "legend": {"bottom": "0"},
             "xAxis": {"type": "category", "data": day_labels, "name": "Days to Ship"},
             "yAxis": {"type": "value"},
             "grid": {"bottom": "12%"},
-            "series": series,
+            "series": delay_series,
         }
-        st_echarts(options=options, height="450px", key="ship_delay", theme="streamlit")
+        st_echarts(
+            options=delay_opts, height="450px", key="ship_delay", theme="streamlit"
+        )
 
 with row5_4:
     # Order Priority Distribution (donut)
@@ -919,7 +949,7 @@ with row5_4:
     if priority_df.is_empty():
         st.info("No priority data.")
     else:
-        options = {
+        donut_opts = {
             "title": {"text": "Order Priority", "left": "center"},
             "tooltip": {"trigger": "item", "formatter": "{b}: {c} ({d}%)"},
             "series": [
@@ -949,9 +979,9 @@ with row5_4:
             ],
         }
         st_echarts(
-            options=options, height="450px", key="priority_donut", theme="streamlit"
+            options=donut_opts, height="450px", key="priority_donut", theme="streamlit"
         )
 
 # --- Data Preview ---
-with st.expander("📝 Raw Data Preview"):
+with st.expander("Raw data preview", icon=":material/table_view:"):
     st.dataframe(current_df.head(100).to_pandas(), use_container_width=True)
