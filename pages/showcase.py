@@ -983,4 +983,4 @@ with row5_4:
 
 # --- Data Preview ---
 with st.expander("Raw data preview", icon=":material/table_view:"):
-    st.dataframe(current_df.head(100).to_pandas(), use_container_width=True)
+    st.dataframe(current_df.head(100).to_pandas(), width="stretch")
