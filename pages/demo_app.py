@@ -93,16 +93,6 @@ def page_theme():
         "The `theme` parameter controls how the chart is styled. "
         "It accepts a **string** or a **dict**:"
     )
-    st.markdown(
-        """
-| Value | Behavior |
-|---|---|
-| `"streamlit"` (default) | Reads Streamlit's CSS variables (`--st-text-color`, `--st-background-color`, etc.), so the chart **automatically adapts to light/dark mode** and any custom Streamlit theme set in `.streamlit/config.toml`. |
-| `"dark"` / `"light"` | Uses ECharts' built-in dark or light theme. No Streamlit CSS variables are read. |
-| `""` (empty string) | No theme — plain ECharts default (always light). |
-| `{...}` (dict) | Registered as a custom ECharts theme object via `echarts.registerTheme()`. Full control over colors, text styles, etc. |
-"""
-    )
 
     BUILTIN_THEMES = ["streamlit", "dark", "light", ""]
 
@@ -138,6 +128,17 @@ def page_theme():
         }
         st_echarts(options=OPTIONS, theme=CUSTOM_THEME, key="theme_dict_demo")
 
+    st.markdown(
+        """
+| Value | Behavior |
+|---|---|
+| `"streamlit"` (default) | Reads Streamlit's CSS variables (`--st-text-color`, `--st-background-color`, etc.), so the chart **automatically adapts to light/dark mode** and any custom Streamlit theme set in `.streamlit/config.toml`. |
+| `"dark"` / `"light"` | Uses ECharts' built-in dark or light theme. No Streamlit CSS variables are read. |
+| `""` (empty string) | No theme — plain ECharts default (always light). |
+| `{...}` (dict) | Registered as a custom ECharts theme object via `echarts.registerTheme()`. Full control over colors, text styles, etc. |
+"""
+    )
+    
     _show_source(page_theme)
 
 
@@ -553,6 +554,8 @@ SECTIONS = {
 }
 
 st.title("API Guide")
-selected = st.selectbox("Choose a section", list(SECTIONS.keys()), key="api_guide_section")
-st.divider()
+with st.sidebar:
+    st.title(":material/book: Table of Contents")
+    selected = st.selectbox("Choose a section", list(SECTIONS.keys()), key="api_guide_section")
+
 SECTIONS[selected]()
