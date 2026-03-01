@@ -16,6 +16,12 @@ For local development against the `streamlit-echarts` source:
 uv pip install -e ../streamlit-echarts --force-reinstall
 ```
 
+To install a pre-release version from TestPyPI:
+
+```sh
+uv pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ streamlit-echarts
+```
+
 ## Run
 
 ```sh
