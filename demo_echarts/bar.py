@@ -44,54 +44,60 @@ def render_set_style_of_single_bar():
 
 def render_waterfall_chart():
     options = {
-        "title": {
-            "text": "阶梯瀑布图",
-            "subtext": "From ExcelHome",
-            "sublink": "http://e.weibo.com/1341556070/Aj1J2x5a5",
-        },
+        "title": {"text": "Accumulated Waterfall Chart"},
         "tooltip": {
             "trigger": "axis",
             "axisPointer": {"type": "shadow"},
             "formatter": JsCode(
-                "function(params){var tar;if(params[1].value!=='-'){tar=params[1]}else{tar=params[0]}return tar.name+'<br/>'+tar.seriesName+' : '+tar.value}"
+                """
+                function (params) {
+                  let tar;
+                  if (params[1] && params[1].value !== '-') {
+                    tar = params[1];
+                  } else {
+                    tar = params[2];
+                  }
+                  return tar && tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                }
+                """
             ).js_code,
         },
-        "legend": {"data": ["支出", "收入"]},
+        "legend": {"data": ["Expenses", "Income"]},
         "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
         "xAxis": {
             "type": "category",
-            "splitLine": {"show": False},
-            "data": [f"11月 {i} 日" for i in range(1, 12)],
+            "data": [f"Nov {i}" for i in range(1, 12)],
         },
         "yAxis": {"type": "value"},
         "series": [
             {
-                "name": "辅助",
+                "name": "Placeholder",
                 "type": "bar",
-                "stack": "总量",
+                "stack": "Total",
+                "silent": True,
                 "itemStyle": {
-                    "barBorderColor": "rgba(0,0,0,0)",
-                    "color": "rgba(0,0,0,0)",
+                    "borderColor": "transparent",
+                    "color": "transparent",
                 },
                 "emphasis": {
                     "itemStyle": {
-                        "barBorderColor": "rgba(0,0,0,0)",
-                        "color": "rgba(0,0,0,0)",
+                        "borderColor": "transparent",
+                        "color": "transparent",
                     }
                 },
                 "data": [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292],
             },
             {
-                "name": "收入",
+                "name": "Income",
                 "type": "bar",
-                "stack": "总量",
+                "stack": "Total",
                 "label": {"show": True, "position": "top"},
                 "data": [900, 345, 393, "-", "-", 135, 178, 286, "-", "-", "-"],
             },
             {
-                "name": "支出",
+                "name": "Expenses",
                 "type": "bar",
-                "stack": "总量",
+                "stack": "Total",
                 "label": {"show": True, "position": "bottom"},
                 "data": ["-", "-", "-", 108, 154, "-", "-", "-", 119, 361, 203],
             },
@@ -158,6 +164,135 @@ def render_stacked_horizontal_bar():
     st_echarts(options=options, height="500px")
 
 
+def render_mixed_line_bar():
+    options = {
+        "tooltip": {
+            "trigger": "axis",
+            "axisPointer": {"type": "cross", "crossStyle": {"color": "#999"}},
+        },
+        "toolbox": {
+            "feature": {
+                "dataView": {"show": True, "readOnly": False},
+                "magicType": {"show": True, "type": ["line", "bar"]},
+                "restore": {"show": True},
+                "saveAsImage": {"show": True},
+            }
+        },
+        "legend": {"data": ["Evaporation", "Precipitation", "Temperature"]},
+        "xAxis": [
+            {
+                "type": "category",
+                "data": [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ],
+                "axisPointer": {"type": "shadow"},
+            }
+        ],
+        "yAxis": [
+            {
+                "type": "value",
+                "name": "Precipitation",
+                "min": 0,
+                "max": 250,
+                "interval": 50,
+                "axisLabel": {"formatter": "{value} ml"},
+            },
+            {
+                "type": "value",
+                "name": "Temperature",
+                "min": 0,
+                "max": 25,
+                "interval": 5,
+                "axisLabel": {"formatter": "{value} °C"},
+            },
+        ],
+        "series": [
+            {
+                "name": "Evaporation",
+                "type": "bar",
+                "tooltip": {
+                    "valueFormatter": JsCode(
+                        "function (value) { return value + ' ml'; }"
+                    ).js_code
+                },
+                "data": [
+                    2.0,
+                    4.9,
+                    7.0,
+                    23.2,
+                    25.6,
+                    76.7,
+                    135.6,
+                    162.2,
+                    32.6,
+                    20.0,
+                    6.4,
+                    3.3,
+                ],
+            },
+            {
+                "name": "Precipitation",
+                "type": "bar",
+                "tooltip": {
+                    "valueFormatter": JsCode(
+                        "function (value) { return value + ' ml'; }"
+                    ).js_code
+                },
+                "data": [
+                    2.6,
+                    5.9,
+                    9.0,
+                    26.4,
+                    28.7,
+                    70.7,
+                    175.6,
+                    182.2,
+                    48.7,
+                    18.8,
+                    6.0,
+                    2.3,
+                ],
+            },
+            {
+                "name": "Temperature",
+                "type": "line",
+                "yAxisIndex": 1,
+                "tooltip": {
+                    "valueFormatter": JsCode(
+                        "function (value) { return value + ' °C'; }"
+                    ).js_code
+                },
+                "data": [
+                    2.0,
+                    2.2,
+                    3.3,
+                    4.5,
+                    6.3,
+                    10.2,
+                    20.3,
+                    23.4,
+                    23.0,
+                    16.5,
+                    12.0,
+                    6.2,
+                ],
+            },
+        ],
+    }
+    st_echarts(options=options, height="500px")
+
+
 ST_BAR_DEMOS = {
     "Basic bar": (
         render_basic_bar,
@@ -174,5 +309,9 @@ ST_BAR_DEMOS = {
     "Stacked Horizontal Bar": (
         render_stacked_horizontal_bar,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-y-category-stack",
+    ),
+    "Mixed Line and Bar": (
+        render_mixed_line_bar,
+        "https://echarts.apache.org/examples/en/editor.html?c=mix-line-bar",
     ),
 }
