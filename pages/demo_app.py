@@ -32,7 +32,8 @@ def page_options():
     st.header("1. `options`")
     st.markdown(
         "`options` is the only required argument. "
-        "It accepts a plain Python `dict` that maps 1-to-1 to the ECharts option object."
+        "It accepts a plain Python `dict` that maps 1-to-1 to the ECharts option object. "
+        "This one comes from <https://echarts.apache.org/examples/en/editor.html?c=bar-simple>"
     )
     options = {
         "xAxis": {
