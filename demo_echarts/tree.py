@@ -44,9 +44,37 @@ def render_basic_tree():
     st_echarts(option, height="500px")
 
 
+def render_radial_tree():
+    with open("./data/flare.json", "r") as f:
+        data = json.loads(f.read())
+
+    option = {
+        "tooltip": {"trigger": "item", "triggerOn": "mousemove"},
+        "series": [
+            {
+                "type": "tree",
+                "data": [data],
+                "top": "18%",
+                "bottom": "14%",
+                "layout": "radial",
+                "symbol": "emptyCircle",
+                "symbolSize": 7,
+                "initialTreeDepth": 3,
+                "animationDurationUpdate": 750,
+                "emphasis": {"focus": "descendant"},
+            }
+        ],
+    }
+    st_echarts(option, height="500px")
+
+
 ST_TREE_DEMOS = {
     "From Left to Right Tree": (
         render_basic_tree,
         "https://echarts.apache.org/examples/en/editor.html?c=tree-basic",
+    ),
+    "Radial Tree": (
+        render_radial_tree,
+        "https://echarts.apache.org/examples/en/editor.html?c=tree-radial",
     ),
 }

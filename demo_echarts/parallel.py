@@ -1,6 +1,32 @@
 from streamlit_echarts import st_echarts
 
 
+def render_parallel_simple():
+    options = {
+        "parallelAxis": [
+            {"dim": 0, "name": "Price"},
+            {"dim": 1, "name": "Net Weight"},
+            {"dim": 2, "name": "Amount"},
+            {
+                "dim": 3,
+                "name": "Score",
+                "type": "category",
+                "data": ["Excellent", "Good", "OK", "Bad"],
+            },
+        ],
+        "series": {
+            "type": "parallel",
+            "lineStyle": {"width": 4},
+            "data": [
+                [12.99, 100, 82, "Good"],
+                [9.99, 80, 77, "OK"],
+                [20, 120, 60, "Excellent"],
+            ],
+        },
+    }
+    st_echarts(options=options, height="500px")
+
+
 def render_parallel_aqi():
     # Schema:
     # date,AQIindex,PM2.5,PM10,CO,NO2,SO2
@@ -187,6 +213,10 @@ def render_parallel_aqi():
 
 
 ST_PARALLEL_DEMOS = {
+    "Basic Parallel": (
+        render_parallel_simple,
+        "https://echarts.apache.org/examples/en/editor.html?c=parallel-simple",
+    ),
     "Parallel Aqi": (
         render_parallel_aqi,
         "https://echarts.apache.org/examples/en/editor.html?c=parallel-aqi",

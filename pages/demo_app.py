@@ -280,8 +280,81 @@ def page_key():
     _show_source(page_key)
 
 
+def page_replace_merge():
+    st.header("7. `replace_merge`")
+    st.markdown(
+        "`replace_merge` controls how ECharts merges new options with the previous state. "
+        "Set it to `\"series\"` to enable `universalTransition` — smooth morph animations "
+        "when the series structure changes (e.g. drilldown)."
+    )
+
+    drilldown_data = {
+        "animals": [["Cats", 4], ["Dogs", 2], ["Cows", 1], ["Sheep", 2], ["Pigs", 1]],
+        "fruits": [["Apples", 4], ["Oranges", 2]],
+        "cars": [["Toyota", 4], ["Opel", 2], ["Volkswagen", 2]],
+    }
+
+    if "drilldown_group" not in st.session_state:
+        st.session_state.drilldown_group = None
+
+    group = st.session_state.drilldown_group
+
+    if group is None:
+        options = {
+            "xAxis": {"data": ["Animals", "Fruits", "Cars"]},
+            "yAxis": {},
+            "animationDurationUpdate": 500,
+            "series": {
+                "type": "bar",
+                "id": "sales",
+                "data": [
+                    {"value": 5, "groupId": "animals"},
+                    {"value": 2, "groupId": "fruits"},
+                    {"value": 4, "groupId": "cars"},
+                ],
+                "universalTransition": {"enabled": True, "divideShape": "clone"},
+            },
+        }
+    else:
+        sub = drilldown_data[group]
+        options = {
+            "xAxis": {"data": [item[0] for item in sub]},
+            "yAxis": {},
+            "animationDurationUpdate": 500,
+            "series": {
+                "type": "bar",
+                "id": "sales",
+                "dataGroupId": group,
+                "data": [item[1] for item in sub],
+                "universalTransition": {"enabled": True, "divideShape": "clone"},
+            },
+        }
+
+    events = {
+        "click": "function(params) { return params.data && params.data.groupId ? params.data.groupId : null }",
+    }
+
+    if group is not None:
+        if st.button("Back", key="drilldown_back"):
+            st.session_state.drilldown_group = None
+            st.rerun()
+
+    result = st_echarts(
+        options=options,
+        events=events,
+        height="400px",
+        replace_merge="series",
+        key="replace_merge_demo",
+    )
+    if result and result.chart_event and result.chart_event in drilldown_data:
+        st.session_state.drilldown_group = result.chart_event
+        st.rerun()
+
+    _show_source(page_replace_merge)
+
+
 def page_on_change():
-    st.header("7. `on_change`")
+    st.header("8. `on_change`")
     st.markdown(
         "`on_change` is a Python callback that runs server-side each time a chart event fires. "
         "Here, clicking any bar triggers the `click` event, which calls `on_change` — "
@@ -314,7 +387,7 @@ def page_on_change():
 
 
 def page_map():
-    st.header("8. `map` and the `Map` class")
+    st.header("9. `map` and the `Map` class")
     st.markdown(
         "Register a custom GeoJSON map with `Map(map_name=..., geo_json=...)`, "
         "then reference `map_name` in a `geo` or `map` series."
@@ -378,7 +451,7 @@ def page_map():
 
 
 def page_jscode():
-    st.header("9. `JsCode`")
+    st.header("10. `JsCode`")
     st.markdown(
         "`JsCode` wraps a JavaScript string so the frontend evaluates it as a live function "
         "rather than passing it as a plain string. Use it wherever ECharts expects a callback "
@@ -418,7 +491,7 @@ def page_jscode():
 
 
 def page_layouts():
-    st.header("10. Collapsible layouts")
+    st.header("11. Collapsible layouts")
     st.markdown(
         "Charts inside containers that hide content initially "
         "resize correctly when revealed."
@@ -456,7 +529,7 @@ def page_layouts():
 
 
 def page_pyecharts():
-    st.header("11. PyECharts")
+    st.header("12. PyECharts")
     st.markdown(
         "`st_pyecharts` accepts a PyECharts chart object directly. "
         "Install with `pip install streamlit-echarts[pyecharts]`."
@@ -546,11 +619,12 @@ SECTIONS = {
     "4. theme": page_theme,
     "5. interactions": page_interactions,
     "6. key": page_key,
-    "7. on_change": page_on_change,
-    "8. map / Map": page_map,
-    "9. JsCode": page_jscode,
-    "10. collapsible layouts": page_layouts,
-    "11. pyecharts": page_pyecharts,
+    "7. replace_merge": page_replace_merge,
+    "8. on_change": page_on_change,
+    "9. map / Map": page_map,
+    "10. JsCode": page_jscode,
+    "11. collapsible layouts": page_layouts,
+    "12. pyecharts": page_pyecharts,
 }
 
 st.title("API Guide")

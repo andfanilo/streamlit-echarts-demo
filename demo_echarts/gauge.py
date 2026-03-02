@@ -4,6 +4,7 @@ import streamlit as st
 from streamlit_echarts import st_echarts
 
 
+@st.fragment(run_every=2)
 def render_ring_gauge():
     option = {
         "series": [
@@ -59,11 +60,42 @@ def render_ring_gauge():
     }
 
     st_echarts(option, height="500px", key="echarts")
-    time.sleep(2)
-    st.rerun()
+
+
+def render_progress_gauge():
+    options = {
+        "series": [
+            {
+                "type": "gauge",
+                "progress": {"show": True, "width": 18},
+                "axisLine": {"lineStyle": {"width": 18}},
+                "axisTick": {"show": False},
+                "splitLine": {"length": 15, "lineStyle": {"width": 2, "color": "#999"}},
+                "axisLabel": {"distance": 25, "color": "#999", "fontSize": 20},
+                "anchor": {
+                    "show": True,
+                    "showAbove": True,
+                    "size": 25,
+                    "itemStyle": {"borderWidth": 10},
+                },
+                "title": {"show": False},
+                "detail": {
+                    "valueAnimation": True,
+                    "fontSize": 80,
+                    "offsetCenter": [0, "70%"],
+                },
+                "data": [{"value": 70}],
+            }
+        ]
+    }
+    st_echarts(options=options, height="500px")
 
 
 ST_GAUGE_DEMOS = {
+    "Progress Gauge": (
+        render_progress_gauge,
+        "https://echarts.apache.org/examples/en/editor.html?c=gauge-progress",
+    ),
     "Ring Gauge": (
         render_ring_gauge,
         "https://echarts.apache.org/examples/en/editor.html?c=gauge-ring",

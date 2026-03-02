@@ -1,6 +1,7 @@
 from .bar import ST_BAR_DEMOS
 from .boxplot import ST_BOXPLOT_DEMOS
 from .calendar import ST_CALENDAR_DEMOS
+from .chord import ST_CHORD_DEMOS
 from .candlestick import ST_CANDLESTICK_DEMOS
 from .dataset import ST_DATASET_DEMOS
 from .events import ST_EVENTS_DEMOS
@@ -11,6 +12,7 @@ from .graph import ST_GRAPH_DEMOS
 from .heatmap import ST_HEATMAP_DEMOS
 from .line import ST_LINE_DEMOS
 from .map import ST_MAP_DEMOS
+from .matrix import ST_MATRIX_DEMOS
 from .parallel import ST_PARALLEL_DEMOS
 from .pictorial_bar import ST_PICTORIAL_BAR_DEMOS
 from .pie import ST_PIE_DEMOS
@@ -43,6 +45,8 @@ ST_DEMOS_BY_CATEGORY = {
     "Pictorial Bar": ST_PICTORIAL_BAR_DEMOS,
     "Theme River": ST_THEMERIVER_DEMOS,
     "Calendar": ST_CALENDAR_DEMOS,
+    "Matrix": ST_MATRIX_DEMOS,
+    "Chord": ST_CHORD_DEMOS,
     "Dataset": ST_DATASET_DEMOS,
     "Events": ST_EVENTS_DEMOS,
     "Extensions": ST_EXTENSIONS_DEMOS,
