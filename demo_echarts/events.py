@@ -59,7 +59,7 @@ def render_labelchanged():
         "legendselectchanged": "function(params) { return params.selected }",
     }
     result = st_echarts(
-        options=options, events=events, height="600px", key="render_pie_events"
+        options=options, events=events, height="500px", key="render_pie_events"
     )
     if result and result.chart_event:
         st.write(result.chart_event)

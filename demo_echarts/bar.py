@@ -38,7 +38,7 @@ def render_set_style_of_single_bar():
     }
     st_echarts(
         options=options,
-        height="400px",
+        height="500px",
     )
 
 

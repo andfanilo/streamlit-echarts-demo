@@ -162,7 +162,7 @@ def render_anscombe_quartet():
             },
         ],
     }
-    st_echarts(options=option, height="600px")
+    st_echarts(options=option, height="500px")
 
 
 def render_scatter_single_axis():
@@ -405,7 +405,7 @@ def render_scatter_single_axis():
     }
     for dataItem in data:
         option["series"][dataItem[0]]["data"].append([dataItem[1], dataItem[2]])
-    st_echarts(options=option, height="600px")
+    st_echarts(options=option, height="500px")
 
 
 ST_SCATTER_DEMOS = {

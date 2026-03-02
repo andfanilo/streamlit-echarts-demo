@@ -16,7 +16,7 @@ def render_basic_line_chart():
         "series": [{"data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line"}],
     }
     st_echarts(
-        options=option, height="400px",
+        options=option, height="500px",
     )
 
 
@@ -36,113 +36,117 @@ def render_basic_area_chart():
             }
         ],
     }
-    st_echarts(options=options)
+    st_echarts(options=options, height="500px")
 
 
 def render_stacked_line_chart():
     options = {
-        "title": {"text": "折线图堆叠"},
+        "title": {"text": "Stacked Line"},
         "tooltip": {"trigger": "axis"},
-        "legend": {"data": ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"]},
+        "legend": {
+            "data": ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"]
+        },
         "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
         "toolbox": {"feature": {"saveAsImage": {}}},
         "xAxis": {
             "type": "category",
             "boundaryGap": False,
-            "data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+            "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         },
         "yAxis": {"type": "value"},
         "series": [
             {
-                "name": "邮件营销",
+                "name": "Email",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "data": [120, 132, 101, 134, 90, 230, 210],
             },
             {
-                "name": "联盟广告",
+                "name": "Union Ads",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "data": [220, 182, 191, 234, 290, 330, 310],
             },
             {
-                "name": "视频广告",
+                "name": "Video Ads",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "data": [150, 232, 201, 154, 190, 330, 410],
             },
             {
-                "name": "直接访问",
+                "name": "Direct",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "data": [320, 332, 301, 334, 390, 330, 320],
             },
             {
-                "name": "搜索引擎",
+                "name": "Search Engine",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "data": [820, 932, 901, 934, 1290, 1330, 1320],
             },
         ],
     }
-    st_echarts(options=options, height="400px")
+    st_echarts(options=options, height="500px")
 
 
 def render_stacked_area_chart():
     options = {
-        "title": {"text": "堆叠区域图"},
+        "title": {"text": "Stacked Area Chart"},
         "tooltip": {
             "trigger": "axis",
             "axisPointer": {"type": "cross", "label": {"backgroundColor": "#6a7985"}},
         },
-        "legend": {"data": ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"]},
+        "legend": {
+            "data": ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"]
+        },
         "toolbox": {"feature": {"saveAsImage": {}}},
         "grid": {"left": "3%", "right": "4%", "bottom": "3%", "containLabel": True},
         "xAxis": [
             {
                 "type": "category",
                 "boundaryGap": False,
-                "data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
             }
         ],
         "yAxis": [{"type": "value"}],
         "series": [
             {
-                "name": "邮件营销",
+                "name": "Email",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "areaStyle": {},
                 "emphasis": {"focus": "series"},
                 "data": [120, 132, 101, 134, 90, 230, 210],
             },
             {
-                "name": "联盟广告",
+                "name": "Union Ads",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "areaStyle": {},
                 "emphasis": {"focus": "series"},
                 "data": [220, 182, 191, 234, 290, 330, 310],
             },
             {
-                "name": "视频广告",
+                "name": "Video Ads",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "areaStyle": {},
                 "emphasis": {"focus": "series"},
                 "data": [150, 232, 201, 154, 190, 330, 410],
             },
             {
-                "name": "直接访问",
+                "name": "Direct",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "areaStyle": {},
                 "emphasis": {"focus": "series"},
                 "data": [320, 332, 301, 334, 390, 330, 320],
             },
             {
-                "name": "搜索引擎",
+                "name": "Search Engine",
                 "type": "line",
-                "stack": "总量",
+                "stack": "Total",
                 "label": {"show": True, "position": "top"},
                 "areaStyle": {},
                 "emphasis": {"focus": "series"},
@@ -150,7 +154,7 @@ def render_stacked_area_chart():
             },
         ],
     }
-    st_echarts(options=options, height="400px")
+    st_echarts(options=options, height="500px")
 
 
 def render_line_race():
@@ -219,7 +223,7 @@ def render_line_race():
         "grid": {"right": 140},
         "series": seriesList,
     }
-    st_echarts(options=option, height="600px")
+    st_echarts(options=option, height="500px")
 
 
 def render_smoothed_line_chart():
@@ -233,7 +237,7 @@ def render_smoothed_line_chart():
             {"data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line", "smooth": True}
         ],
     }
-    st_echarts(options=options, height="400px")
+    st_echarts(options=options, height="500px")
 
 
 def render_bump_chart():
@@ -297,7 +301,7 @@ def render_bump_chart():
         },
         "series": series_list,
     }
-    st_echarts(options=options, height="600px")
+    st_echarts(options=options, height="500px")
 
 
 def render_intraday_chart_with_breaks():
@@ -378,7 +382,7 @@ def render_intraday_chart_with_breaks():
         "dataZoom": [{"type": "inside", "xAxisIndex": 0}, {"type": "slider", "xAxisIndex": 0}],
         "series": [{"type": "line", "symbolSize": 0, "data": data["seriesData"]}],
     }
-    st_echarts(options=options, height="600px")
+    st_echarts(options=options, height="500px")
 
 
 ST_LINE_DEMOS = {

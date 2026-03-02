@@ -29,7 +29,7 @@ def render_pie_simple():
         ],
     }
     st_echarts(
-        options=options, height="600px",
+        options=options, height="500px",
     )
 
 
@@ -102,7 +102,7 @@ def render_nightingale_rose_diagram():
         ],
     }
     st_echarts(
-        options=option, height="600px",
+        options=option, height="500px",
     )
 
 
