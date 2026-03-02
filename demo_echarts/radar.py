@@ -36,7 +36,7 @@ def render_basic_radar():
 
 
 ST_RADAR_DEMOS = {
-    "Radar: Basic Radar": (
+    "Basic Radar": (
         render_basic_radar,
         "https://echarts.apache.org/examples/en/editor.html?c=radar",
     ),

@@ -45,7 +45,7 @@ def render_basic_tree():
 
 
 ST_TREE_DEMOS = {
-    "Tree: From Left to Right Tree": (
+    "From Left to Right Tree": (
         render_basic_tree,
         "https://echarts.apache.org/examples/en/editor.html?c=tree-basic",
     ),

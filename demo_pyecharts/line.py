@@ -18,7 +18,7 @@ def render_basic_line_chart():
 
 
 ST_LINE_DEMOS = {
-    "Line: Basic Line": (
+    "Basic Line": (
         render_basic_line_chart,
         "https://gallery.pyecharts.org/#/Line/line_base",
     )

@@ -73,7 +73,7 @@ def render_vehicles():
 
 
 ST_PICTORIAL_BAR_DEMOS = {
-    "Pictorial Bar: Vehicles": (
+    "Vehicles": (
         render_vehicles,
         "https://echarts.apache.org/examples/en/editor.html?c=pictorialBar-vehicle",
     ),

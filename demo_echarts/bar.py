@@ -159,19 +159,19 @@ def render_stacked_horizontal_bar():
 
 
 ST_BAR_DEMOS = {
-    "Bar: Basic bar": (
+    "Basic bar": (
         render_basic_bar,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-simple",
     ),
-    "Bar: Set Style Of Single Bar": (
+    "Set Style Of Single Bar": (
         render_set_style_of_single_bar,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-data-color",
     ),
-    "Bar: Waterfall Chart": (
+    "Waterfall Chart": (
         render_waterfall_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-waterfall2",
     ),
-    "Bar: Stacked Horizontal Bar": (
+    "Stacked Horizontal Bar": (
         render_stacked_horizontal_bar,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-y-category-stack",
     ),

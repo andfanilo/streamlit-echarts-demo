@@ -64,7 +64,7 @@ def render_ring_gauge():
 
 
 ST_GAUGE_DEMOS = {
-    "Gauge: Ring Gauge": (
+    "Ring Gauge": (
         render_ring_gauge,
         "https://echarts.apache.org/examples/en/editor.html?c=gauge-ring",
     ),

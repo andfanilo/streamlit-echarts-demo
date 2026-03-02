@@ -25,7 +25,7 @@ def render_random_bar_chart():
 
 
 ST_BAR_DEMOS = {
-    "Bar: Random data": (
+    "Random data": (
         render_random_bar_chart,
         "https://gallery.pyecharts.org/#/Line/line_base",
     )

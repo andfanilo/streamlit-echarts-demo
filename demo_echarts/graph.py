@@ -121,15 +121,15 @@ def render_les_miserables():
 
 
 ST_GRAPH_DEMOS = {
-    "Graph: Simple Graph": (
+    "Simple Graph": (
         render_simple_graph,
         "https://echarts.apache.org/examples/en/editor.html?c=graph-simple",
     ),
-    "Graph: Force Layout": (
+    "Force Layout": (
         render_force_layout,
         "https://echarts.apache.org/examples/en/editor.html?c=graph-force",
     ),
-    "Graph: Les Miserables": (
+    "Les Miserables": (
         render_les_miserables,
         "https://echarts.apache.org/examples/en/editor.html?c=graph",
     ),

@@ -382,35 +382,35 @@ def render_intraday_chart_with_breaks():
 
 
 ST_LINE_DEMOS = {
-    "Line: Basic Line Chart": (
+    "Basic Line Chart": (
         render_basic_line_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=line-simple",
     ),
-    "Line: Smoothed Line Chart": (
+    "Smoothed Line Chart": (
         render_smoothed_line_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=line-smooth",
     ),
-    "Line: Bump Chart (Ranking)": (
+    "Bump Chart (Ranking)": (
         render_bump_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=bump-chart",
     ),
-    "Line: Intraday Chart with Breaks (Single Day)": (
+    "Intraday Chart with Breaks (Single Day)": (
         render_intraday_chart_with_breaks,
         "https://echarts.apache.org/examples/en/editor.html?c=intraday-breaks-2",
     ),
-    "Line: Basic Area Chart": (
+    "Basic Area Chart": (
         render_basic_area_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=area-basic",
     ),
-    "Line: Stacked Line Chart": (
+    "Stacked Line Chart": (
         render_stacked_line_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=line-stack",
     ),
-    "Line: Stacked Area Chart": (
+    "Stacked Area Chart": (
         render_stacked_area_chart,
         "https://echarts.apache.org/examples/en/editor.html?c=area-stack",
     ),
-    "Line: Line Race": (
+    "Line Race": (
         render_line_race,
         "https://echarts.apache.org/examples/en/editor.html?c=line-race",
     ),

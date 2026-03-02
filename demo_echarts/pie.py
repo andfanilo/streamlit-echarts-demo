@@ -107,15 +107,15 @@ def render_nightingale_rose_diagram():
 
 
 ST_PIE_DEMOS = {
-    "Pie: Simple Pie": (
+    "Simple Pie": (
         render_pie_simple,
         "https://echarts.apache.org/examples/en/editor.html?c=pie-simple",
     ),
-    "Pie: Doughnut Chart": (
+    "Doughnut Chart": (
         render_pie_donutradius,
         "https://echarts.apache.org/examples/en/editor.html?c=pie-borderRadius",
     ),
-    "Pie: Nightingale Rose Diagram": (
+    "Nightingale Rose Diagram": (
         render_nightingale_rose_diagram,
         "https://echarts.apache.org/examples/en/editor.html?c=pie-roseType-simple",
     ),

@@ -29,7 +29,7 @@ def render_basic_graph_chart():
 
 
 ST_GRAPH_DEMOS = {
-    "Graph: Basic Graph": (
+    "Basic Graph": (
         render_basic_graph_chart,
         "https://gallery.pyecharts.org/#/Graph/graph_base",
     )

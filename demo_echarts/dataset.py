@@ -57,7 +57,7 @@ def render_dataset():
 
 
 ST_DATASET_DEMOS = {
-    "Dataset: Share Dataset": (
+    "Share Dataset": (
         render_dataset,
         "https://echarts.apache.org/examples/en/editor.html?c=dataset-link",
     ),

@@ -66,11 +66,11 @@ def render_labelchanged():
 
 
 ST_EVENTS_DEMOS = {
-    "Events: Basic bar with echarts event": (
+    "Basic bar with echarts event": (
         render_click_events,
         "https://echarts.apache.org/examples/en/editor.html?c=bar-simple",
     ),
-    "Events: Select legend event": (
+    "Select legend event": (
         render_labelchanged,
         "https://echarts.apache.org/examples/en/editor.html?c=pie-simple",
     ),

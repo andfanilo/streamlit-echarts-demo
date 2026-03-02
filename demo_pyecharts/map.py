@@ -21,7 +21,7 @@ def render_map():
 
 
 ST_MAP_DEMOS = {
-    "Map: Map World": (
+    "Map World": (
         render_map,
         "https://gallery.pyecharts.org/#/Map/map_world",
     )

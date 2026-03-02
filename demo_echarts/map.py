@@ -136,7 +136,7 @@ def render_usa():
 
 
 ST_MAP_DEMOS = {
-    "Map: USA Population estimates": (
+    "USA Population estimates": (
         render_usa,
         "https://echarts.apache.org/examples/en/editor.html?c=map-usa",
     ),

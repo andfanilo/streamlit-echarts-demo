@@ -409,15 +409,15 @@ def render_scatter_single_axis():
 
 
 ST_SCATTER_DEMOS = {
-    "Scatter: Basic Scatter Chart": (
+    "Basic Scatter Chart": (
         render_scatter_simple,
         "https://echarts.apache.org/examples/en/editor.html?c=scatter-simple",
     ),
-    "Scatter: Anscombe's Quartet": (
+    "Anscombe's Quartet": (
         render_anscombe_quartet,
         "https://echarts.apache.org/examples/en/editor.html?c=scatter-anscombe-quartet",
     ),
-    "Scatter: Scatter Single Axis": (
+    "Scatter Single Axis": (
         render_scatter_single_axis,
         "https://echarts.apache.org/examples/en/editor.html?c=scatter-single-axis",
     ),

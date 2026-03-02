@@ -59,7 +59,7 @@ def render_custom_funnel():
 
 
 ST_FUNNEL_DEMOS = {
-    "Funnel: Customized funnel": (
+    "Customized funnel": (
         render_custom_funnel,
         "https://echarts.apache.org/examples/en/editor.html?c=funnel-customize",
     ),

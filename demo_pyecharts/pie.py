@@ -16,7 +16,7 @@ def render_basic_pie_chart():
 
 
 ST_PIE_DEMOS = {
-    "Pie: Basic Pie": (
+    "Basic Pie": (
         render_basic_pie_chart,
         "https://gallery.pyecharts.org/#/Pie/pie_base",
     )

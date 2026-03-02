@@ -165,7 +165,7 @@ def render_themeriver():
 
 
 ST_THEMERIVER_DEMOS = {
-    "Themeriver: Example": (
+    "Example": (
         render_themeriver,
         "https://echarts.apache.org/examples/en/editor.html?c=themeRiver-basic",
     ),

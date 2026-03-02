@@ -160,7 +160,7 @@ def render_basic_boxplot():
 
 
 ST_BOXPLOT_DEMOS = {
-    "Boxplot: Basic Boxplot": (
+    "Basic Boxplot": (
         render_basic_boxplot,
         "https://echarts.apache.org/examples/en/editor.html?c=boxplot-light-velocity",
     ),

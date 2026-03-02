@@ -38,7 +38,7 @@ def render_disk_usage():
 
 
 ST_TREEMAP_DEMOS = {
-    "Treemap: Disk Usage": (
+    "Disk Usage": (
         render_disk_usage,
         "https://echarts.apache.org/examples/en/editor.html?c=treemap-disk",
     ),

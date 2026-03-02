@@ -239,7 +239,7 @@ def render_heatmap_cartesian():
 
 
 ST_HEATMAP_DEMOS = {
-    "Heatmap: Heatmap Cartesian": (
+    "Heatmap Cartesian": (
         render_heatmap_cartesian,
         "https://echarts.apache.org/examples/en/editor.html?c=heatmap-cartesian",
     ),

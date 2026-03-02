@@ -41,11 +41,11 @@ def render_liquidfill():
 
 
 ST_EXTENSIONS_DEMOS = {
-    "Extension: Wordcloud": (
+    "Wordcloud": (
         render_wordcloud,
         "https://github.com/ecomfe/echarts-wordcloud",
     ),
-    "Extension: Liquidfill": (
+    "Liquidfill": (
         render_liquidfill,
         "https://github.com/ecomfe/echarts-liquidfill",
     ),

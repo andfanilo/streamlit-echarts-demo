@@ -21,7 +21,7 @@ def render_basic_candlestick():
 
 
 ST_CANDLESTICK_DEMOS = {
-    "Candlestick: Basic Candlestick": (
+    "Basic Candlestick": (
         render_basic_candlestick,
         "https://echarts.apache.org/examples/en/editor.html?c=candlestick-simple",
     ),

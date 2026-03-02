@@ -43,7 +43,7 @@ def render_drink_flavors():
 
 
 ST_SUNBURST_DEMOS = {
-    "Sunburst: Drink flavors": (
+    "Drink flavors": (
         render_drink_flavors,
         "https://echarts.apache.org/examples/en/editor.html?c=sunburst-drink",
     ),

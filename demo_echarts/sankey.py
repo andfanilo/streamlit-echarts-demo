@@ -45,7 +45,7 @@ def render_sankey_level_settings():
 
 
 ST_SANKEY_DEMOS = {
-    "Sankey: Sankey with Level Settings": (
+    "Sankey with Level Settings": (
         render_sankey_level_settings,
         "https://echarts.apache.org/examples/en/editor.html?c=sankey-levels",
     ),

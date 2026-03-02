@@ -187,7 +187,7 @@ def render_parallel_aqi():
 
 
 ST_PARALLEL_DEMOS = {
-    "Parallel: Parallel Aqi": (
+    "Parallel Aqi": (
         render_parallel_aqi,
         "https://echarts.apache.org/examples/en/editor.html?c=parallel-aqi",
     ),

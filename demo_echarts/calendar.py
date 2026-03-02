@@ -51,7 +51,7 @@ def render_calendar_horizontal():
 
 
 ST_CALENDAR_DEMOS = {
-    "Calendar: Horizontal calendars": (
+    "Horizontal calendars": (
         render_calendar_horizontal,
         "https://echarts.apache.org/examples/en/editor.html?c=calendar-horizontal",
     ),
