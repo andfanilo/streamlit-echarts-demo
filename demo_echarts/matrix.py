@@ -753,7 +753,10 @@ def render_matrix_mbti():
                 "dividerLineStyle": {"width": 0},
                 "label": {"fontFamily": font_family},
             },
-            "body": {"itemStyle": {"borderWidth": 0}, "label": {"fontFamily": font_family}},
+            "body": {
+                "itemStyle": {"borderWidth": 0},
+                "label": {"fontFamily": font_family},
+            },
             "top": 50,
             "backgroundStyle": {
                 "color": "transparent",

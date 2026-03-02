@@ -82,7 +82,11 @@ def render_dataset_sort_bar():
         ],
         "xAxis": {"type": "category", "axisLabel": {"interval": 0, "rotate": 30}},
         "yAxis": {},
-        "series": {"type": "bar", "encode": {"x": "name", "y": "score"}, "datasetIndex": 1},
+        "series": {
+            "type": "bar",
+            "encode": {"x": "name", "y": "score"},
+            "datasetIndex": 1,
+        },
     }
     st_echarts(options=options, height="500px")
 

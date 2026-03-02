@@ -5,6 +5,7 @@ from pyecharts.charts import Pie
 from pyecharts.faker import Faker
 from streamlit_echarts import st_echarts
 
+
 def render_basic_pie_chart():
     c = (
         Pie()

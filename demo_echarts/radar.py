@@ -4,7 +4,9 @@ from streamlit_echarts import st_echarts
 def render_basic_radar():
     option = {
         "title": {"text": "基础雷达图"},
-        "legend": {"data": ["预算分配（Allocated Budget）", "实际开销（Actual Spending）"]},
+        "legend": {
+            "data": ["预算分配（Allocated Budget）", "实际开销（Actual Spending）"]
+        },
         "radar": {
             "indicator": [
                 {"name": "销售（Sales）", "max": 6500},

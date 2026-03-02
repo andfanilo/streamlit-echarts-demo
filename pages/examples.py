@@ -16,9 +16,7 @@ with st.sidebar:
     )
 
     demos_by_category = (
-        ST_PY_DEMOS_BY_CATEGORY
-        if selected_api == "pyecharts"
-        else ST_DEMOS_BY_CATEGORY
+        ST_PY_DEMOS_BY_CATEGORY if selected_api == "pyecharts" else ST_DEMOS_BY_CATEGORY
     )
 
     selected_category = st.selectbox(

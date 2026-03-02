@@ -16,7 +16,8 @@ def render_basic_line_chart():
         "series": [{"data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line"}],
     }
     st_echarts(
-        options=option, height="500px",
+        options=option,
+        height="500px",
     )
 
 
@@ -234,7 +235,11 @@ def render_smoothed_line_chart():
         },
         "yAxis": {"type": "value"},
         "series": [
-            {"data": [820, 932, 901, 934, 1290, 1330, 1320], "type": "line", "smooth": True}
+            {
+                "data": [820, 932, 901, 934, 1290, 1330, 1320],
+                "type": "line",
+                "smooth": True,
+            }
         ],
     }
     st_echarts(options=options, height="500px")
@@ -309,7 +314,9 @@ def render_intraday_chart_with_breaks():
         series_data = []
         start_time = datetime.datetime(2024, 4, 9, 9, 30, tzinfo=datetime.timezone.utc)
         end_time = datetime.datetime(2024, 4, 9, 15, 0, tzinfo=datetime.timezone.utc)
-        break_start = datetime.datetime(2024, 4, 9, 11, 30, tzinfo=datetime.timezone.utc)
+        break_start = datetime.datetime(
+            2024, 4, 9, 11, 30, tzinfo=datetime.timezone.utc
+        )
         break_end = datetime.datetime(2024, 4, 9, 13, 0, tzinfo=datetime.timezone.utc)
 
         current_time = start_time
@@ -370,7 +377,9 @@ def render_intraday_chart_with_breaks():
                     ).js_code,
                 },
                 "breakLabelLayout": {"moveOverlap": False},
-                "breaks": [{"start": data["breakStart"], "end": data["breakEnd"], "gap": 0}],
+                "breaks": [
+                    {"start": data["breakStart"], "end": data["breakEnd"], "gap": 0}
+                ],
                 "breakArea": {
                     "expandOnClick": False,
                     "zigzagAmplitude": 0,
@@ -379,7 +388,10 @@ def render_intraday_chart_with_breaks():
             }
         ],
         "yAxis": {"type": "value", "min": "dataMin"},
-        "dataZoom": [{"type": "inside", "xAxisIndex": 0}, {"type": "slider", "xAxisIndex": 0}],
+        "dataZoom": [
+            {"type": "inside", "xAxisIndex": 0},
+            {"type": "slider", "xAxisIndex": 0},
+        ],
         "series": [{"type": "line", "symbolSize": 0, "data": data["seriesData"]}],
     }
     st_echarts(options=options, height="500px")

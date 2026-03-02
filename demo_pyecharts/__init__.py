@@ -12,4 +12,6 @@ ST_PY_DEMOS_BY_CATEGORY = {
     "Graph": ST_GRAPH_DEMOS,
 }
 
-ST_PY_DEMOS = {k: v for demos in ST_PY_DEMOS_BY_CATEGORY.values() for k, v in demos.items()}
+ST_PY_DEMOS = {
+    k: v for demos in ST_PY_DEMOS_BY_CATEGORY.values() for k, v in demos.items()
+}

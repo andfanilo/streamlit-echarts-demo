@@ -9,7 +9,10 @@ from streamlit_echarts import st_echarts
 
 def render_map():
     with open("./data/countries.geo.json", "r") as f:
-        map = st_Map("world", json.loads(f.read()),)
+        map = st_Map(
+            "world",
+            json.loads(f.read()),
+        )
     c = Map(init_opts=opts.InitOpts(bg_color="white"))
     c.add("Demo", [list(z) for z in zip(Faker.country, Faker.values())], "world")
     c.set_series_opts(label_opts=opts.LabelOpts(is_show=False))

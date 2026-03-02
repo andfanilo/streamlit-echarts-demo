@@ -3,7 +3,11 @@ from streamlit_echarts import st_echarts
 
 def render_pie_simple():
     options = {
-        "title": {"text": "Referer of a Website", "subtext": "Fake Data", "left": "center"},
+        "title": {
+            "text": "Referer of a Website",
+            "subtext": "Fake Data",
+            "left": "center",
+        },
         "tooltip": {"trigger": "item"},
         "legend": {"orient": "vertical", "left": "left"},
         "series": [

@@ -185,7 +185,9 @@ def render_parallel_aqi():
             "min": 0,
             "max": 150,
             "dimension": 2,
-            "inRange": {"color": ["#50a3ba", "#eac736", "#d94e5d"],},
+            "inRange": {
+                "color": ["#50a3ba", "#eac736", "#d94e5d"],
+            },
         },
         "parallel": {
             "left": "5%",
@@ -204,9 +206,24 @@ def render_parallel_aqi():
             },
         },
         "series": [
-            {"name": "北京", "type": "parallel", "lineStyle": lineStyle, "data": dataBJ},
-            {"name": "上海", "type": "parallel", "lineStyle": lineStyle, "data": dataSH},
-            {"name": "广州", "type": "parallel", "lineStyle": lineStyle, "data": dataGZ},
+            {
+                "name": "北京",
+                "type": "parallel",
+                "lineStyle": lineStyle,
+                "data": dataBJ,
+            },
+            {
+                "name": "上海",
+                "type": "parallel",
+                "lineStyle": lineStyle,
+                "data": dataSH,
+            },
+            {
+                "name": "广州",
+                "type": "parallel",
+                "lineStyle": lineStyle,
+                "data": dataGZ,
+            },
         ],
     }
     st_echarts(option, height="500px")

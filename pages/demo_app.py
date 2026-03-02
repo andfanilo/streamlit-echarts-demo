@@ -8,7 +8,10 @@ from streamlit_echarts import JsCode, Map, st_echarts, st_pyecharts
 
 # Base bar chart options reused across pages
 OPTIONS = {
-    "xAxis": {"type": "category", "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+    "xAxis": {
+        "type": "category",
+        "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    },
     "yAxis": {"type": "value"},
     "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
 }
@@ -24,6 +27,7 @@ def _show_source(func):
 # Pages
 # ---------------------------------------------------------------------------
 
+
 def page_options():
     st.header("1. `options`")
     st.markdown(
@@ -31,7 +35,10 @@ def page_options():
         "It accepts a plain Python `dict` that maps 1-to-1 to the ECharts option object."
     )
     options = {
-        "xAxis": {"type": "category", "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+        "xAxis": {
+            "type": "category",
+            "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
         "yAxis": {"type": "value"},
         "series": [{"data": [120, 200, 150, 80, 70, 110, 130], "type": "bar"}],
     }
@@ -60,8 +67,8 @@ def page_height_width():
     st.subheader("Chart inside containers with different `width` settings")
     st.markdown(
         "The chart's `width` interacts with its parent container's `width` setting. "
-        "The bordered box shows the container boundary — notice how `\"content\"` "
-        "shrinks to the chart, while `\"stretch\"` always fills the available space."
+        'The bordered box shows the container boundary — notice how `"content"` '
+        'shrinks to the chart, while `"stretch"` always fills the available space.'
     )
     col_a, col_b = st.columns(2)
     with col_a:
@@ -82,7 +89,9 @@ def page_renderer():
         '`"canvas"` (default) is faster for many data points. '
         '`"svg"` produces a scalable graphic that prints crisply and is accessible to screen readers.'
     )
-    renderer = st.radio("renderer", ["canvas", "svg"], horizontal=True, key="renderer_radio")
+    renderer = st.radio(
+        "renderer", ["canvas", "svg"], horizontal=True, key="renderer_radio"
+    )
     st_echarts(options=OPTIONS, renderer=renderer, key="renderer_demo")
     _show_source(page_renderer)
 
@@ -115,10 +124,10 @@ def page_theme():
             "— download the **JSON** version (not JS), then load it:"
         )
         st.code(
-            'import json\n\n'
+            "import json\n\n"
             'with open("my_theme.json") as f:\n'
-            '    my_theme = json.load(f)\n\n'
-            'st_echarts(options=options, theme=my_theme)',
+            "    my_theme = json.load(f)\n\n"
+            "st_echarts(options=options, theme=my_theme)",
             language="python",
         )
         CUSTOM_THEME = {
@@ -138,7 +147,7 @@ def page_theme():
 | `{...}` (dict) | Registered as a custom ECharts theme object via `echarts.registerTheme()`. Full control over colors, text styles, etc. |
 """
     )
-    
+
     _show_source(page_theme)
 
 
@@ -191,8 +200,14 @@ def page_interactions():
             {
                 "type": "scatter",
                 "data": [
-                    [3.0, 4.5], [7.0, 2.0], [1.5, 6.0], [5.5, 5.5],
-                    [9.0, 1.0], [4.0, 8.0], [6.5, 3.5], [2.0, 7.0],
+                    [3.0, 4.5],
+                    [7.0, 2.0],
+                    [1.5, 6.0],
+                    [5.5, 5.5],
+                    [9.0, 1.0],
+                    [4.0, 8.0],
+                    [6.5, 3.5],
+                    [2.0, 7.0],
                 ],
             }
         ],
@@ -264,7 +279,10 @@ def page_key():
 
     data = DATA_A if st.session_state.rerun_count % 2 == 0 else DATA_B
     options = {
-        "xAxis": {"type": "category", "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+        "xAxis": {
+            "type": "category",
+            "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
         "yAxis": {"type": "value"},
         "series": [{"data": data, "type": "bar"}],
     }
@@ -284,7 +302,7 @@ def page_replace_merge():
     st.header("7. `replace_merge`")
     st.markdown(
         "`replace_merge` controls how ECharts merges new options with the previous state. "
-        "Set it to `\"series\"` to enable `universalTransition` — smooth morph animations "
+        'Set it to `"series"` to enable `universalTransition` — smooth morph animations '
         "when the series structure changes (e.g. drilldown)."
     )
 
@@ -368,11 +386,15 @@ def page_on_change():
 
     def on_chart_change():
         import random
+
         st.session_state.change_count += 1
         st.session_state.on_change_data = [random.randint(30, 250) for _ in range(7)]
 
     options = {
-        "xAxis": {"type": "category", "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+        "xAxis": {
+            "type": "category",
+            "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        },
         "yAxis": {"type": "value"},
         "series": [{"data": st.session_state.on_change_data, "type": "bar"}],
     }
@@ -393,9 +415,7 @@ def page_map():
         "then reference `map_name` in a `geo` or `map` series."
     )
 
-    WORLD_GEOJSON_URL = (
-        "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-    )
+    WORLD_GEOJSON_URL = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
 
     @st.cache_data(show_spinner="Fetching world GeoJSON...")
     def load_world_geojson():
@@ -463,7 +483,9 @@ def page_jscode():
         **OPTIONS,
         "tooltip": {
             "trigger": "axis",
-            "formatter": JsCode("function(p){return p[0].name + ': ' + p[0].value + ' units'}"),
+            "formatter": JsCode(
+                "function(p){return p[0].name + ': ' + p[0].value + ' units'}"
+            ),
         },
     }
     st_echarts(options=tooltip_options, key="jscode_tooltip")
@@ -630,6 +652,8 @@ SECTIONS = {
 st.title("API Guide")
 with st.sidebar:
     st.title(":material/book: Table of Contents")
-    selected = st.selectbox("Choose a section", list(SECTIONS.keys()), key="api_guide_section")
+    selected = st.selectbox(
+        "Choose a section", list(SECTIONS.keys()), key="api_guide_section"
+    )
 
 SECTIONS[selected]()

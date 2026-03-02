@@ -15,7 +15,9 @@ def render_click_events():
         "dblclick": "function(params) { return [params.type, params.name, params.value] }",
     }
 
-    st.markdown("Click on a bar for selection data, double click to see type+name+value")
+    st.markdown(
+        "Click on a bar for selection data, double click to see type+name+value"
+    )
     result = st_echarts(
         options=options,
         events=events,
@@ -30,7 +32,11 @@ def render_click_events():
 
 def render_labelchanged():
     options = {
-        "title": {"text": "某站点用户访问来源", "subtext": "纯属虚构", "left": "center"},
+        "title": {
+            "text": "某站点用户访问来源",
+            "subtext": "纯属虚构",
+            "left": "center",
+        },
         "tooltip": {"trigger": "item"},
         "legend": {
             "orient": "vertical",
